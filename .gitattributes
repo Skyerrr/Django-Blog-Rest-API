@@ -1,0 +1,12 @@
+# Auto detect text files and perform LF normalization
+library/books/blog/static/* linguist-generated
+library/books/blog/static/css/* linguist-generated
+library/books/blog/static/js/* linguist-generated
+library/books/blog/static/img/* linguist-generated
+library/books/blog/templates/* linguist-generated
+library/books/blog/templates/registration/* linguist-generated
+ 
+
+.css linguist-detectable=false
+.html linguist-detectable=false
+.js linguist-detectable=false

@@ -1,0 +1,64 @@
+1 - A client requires uploading and downloading CSV files to your web system, how would
+you implement that?
+
+R: First we need to undestrand the reason why he wants to upload and download the files and what is the relationship between the users and the CSV files.
+
+1. What are the type of users? Costumers, admins, etc... And who has access? → So we can link the relationships in the DB and the location where it will be stored
+2. Do we want to group together all the CSV files or use a way to categorize them? → So we can link the relationships in the DB and plan the structure where it will be stored
+3. Where is the best way to visualize the CSV? Individual for each user's page, grouped together in a separated page by category or is a result of a massive data analysis → So we can plan the best web design approach
+4. The CSV Files needs to be human-readable, or it is used for constant data analysis? → So we can plan the best approach for the highest performance and the system requirements
+5. How long will the CSV files be stored? → To save disk space
+
+If the client is for example a finance company where it needs to access the data when needed: 
+
+Allowing each user to download and upload multiple files at once. → Multithreading on demand
+Each CSV file must have a pattern or a algorithm to filter the data → It is slower if the CSV is not already cleaned Ex: Different CSV files of the same company named different 
+"J&A Holding Stocks" and "JEA Holding Stocks" we could create an algorithm to convert J&A to JEA or vice versa to extract the information with precision, but will demand more from the server.
+If the information needs to be avaiable immediately, we can implement a real time graphic.
+If the information can be acessed later, we can schedule an automatic cleaning code using the pandas library for example at a low server peak hour for better performance
+and the graphic(who can be created with seaborn for example) can be displayed in a web page.
+
+If it is just some CSV files that he wants to upload for whatever reason to access later, we can create a form with Charfield and Filefield and pass it as POST and a function to store the file in the selected path.
+Then we can display all the uploaded CSV files in a list and the client can decide which one he wants to download or delete.
+
+
+
+
+2- Your system consists of an application that receives a measure from a sensor through an
+API and stores it in a model called “Measures”. Your client wants to configure one alarm
+system that sends an email when the measure ‘temperature’ gets out of the thresholds.
+What models would you implement? How do you ensure that the alarm system function
+without blocking the API?
+
+R: Any django code that access the database will not be asynchronous and had to be executed in a thread. Multithreading with Possible solution:
+
+- Separate blocking and non-blocking part and implement the asynchronous part with web server plugins or python ASGI(Asynchronous Server Gateway Interface) code.
+For example, using a ASGI server to do the asynchronous part. We could use uvicorn(https://www.uvicorn.org) and write functions with asyncio.
+
+- Django 4.1 new interface allows writing asynchronous code without the needing to write ORM(Object-Relational-Mappers) operations in sync_to_async() but At this stage, underlying database operations remain synchronous.
+sync_to_async()(https://docs.djangoproject.com/en/4.1/topics/async/#asgiref.sync.sync_to_async) can be used with performance penalties and are no use for efficient long-running requests.
+
+
+
+
+3- 3. A client finds they routinely make simple yet tedious and repetitive changes to many
+records using Django’s admin. They request that we make an admin action so they can
+update a pricing field on 10,000 records at once. How would you go about implementing
+this? Describe any performance issues you expect to encounter.
+
+R: If data is not in CSV or Dataframe
+-Write a code to continuous convert records to CSV or DataFrame using pandas library so we can safely change the data without risking messing up the Database(and make a backup) and for easily manipulation of data
+-Write a code to update the pricing field based on the client preferences
+-implement Asynchronous code to speed up the update pricing field process
+-We can implement Multithreading to avoid blocking others operations but we have risks such as:  
+Potential deadlock making lots of changes to different tables (*A deadlock occurs when the waiting process is still holding on to another resource that the first needs before it can finish.)
+ occurrence and unpredictable results.
+
+
+
+
+
+
+
+
+
