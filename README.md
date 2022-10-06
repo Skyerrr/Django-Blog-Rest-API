@@ -1,6 +1,8 @@
 # Django Blog Rest API
  Django Blog with Rest Api
 
+Install:
+
 cd library<br>
 virtualenv -p python3 venv<br>
 pip3 install -r requirements.txt<br>
