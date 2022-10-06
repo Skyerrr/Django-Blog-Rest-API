@@ -14,7 +14,7 @@ Rest API Routes:
 127.0.0.1:8000/api/books<br>
 127.0.0.1:8000/api/books/{id}<br>
 
-To be implemented:
-Cache with redis
-units tests
-polished code
+To be implemented:<br>
+Cache with redis<br>
+units tests<br>
+polished code<br>
