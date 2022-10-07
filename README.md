@@ -24,4 +24,3 @@ Pass: admin<br>
 
 To be implemented:<br>
 units tests<br>
-polished code<br>
