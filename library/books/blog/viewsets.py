@@ -12,7 +12,9 @@ from .. import models
 
 class UserRegisterView(CreateView):
     """
-    Generic class-based view class for User Registration
+    Generic class-based view class for User Registration.
+    Takes care of Registration Forms
+    Updates DB models.User with user form input data.
     """
 
     form_class = UserCreationForm
@@ -22,7 +24,8 @@ class UserRegisterView(CreateView):
 
 class IndexView(ListView):
     """
-    Generic class-based view for a list of blogs posted by a particular BlogAuthor.
+    Generic class-based view for blog home page.
+    render index.html with a list of all news models
     """
 
     model = models.News
@@ -32,6 +35,8 @@ class IndexView(ListView):
 class AddPostView(CreateView):
     """
     Generic class-based view to create a new post and redirect user to the created post
+    Updates DB models.News with the user form input data.
+    return user to created post page based on post int(primary key)
     """
 
     model = models.News
@@ -39,25 +44,12 @@ class AddPostView(CreateView):
     fields = "__all__"
 
 
-# def news_detail_view(request: Type[Request], pk: int) -> Type[HttpResponse]:
-#     """
-#     View function to filter News table by primary key and return it and raise HTTP 404 if not found.
-#     """
-
-#     try:
-
-#         post = models.News.objects.get(pk=pk)
-
-#     except models.News.DoesNotExist:
-#         raise Http404("News does not exist")
-
-#     return render(request, "post.html", context={"post": post})
-
-
 def news_detail_view(request: Type[Request], pk: int) -> Type[HttpResponse]:
     """
-    View function to verify if data is in cache, if not store in cache,
-    filter News table by primary key and return it and raise HTTP 404 if not found.
+    Filter models.News table by primary key.
+    View function to verify if models.News page is in cache.
+    if not, store it cache and return desired models.News page.
+    Raise HTTP 404 if not found.
     params:
     pk -> models.News int primary key
     """
@@ -83,26 +75,6 @@ def news_detail_view(request: Type[Request], pk: int) -> Type[HttpResponse]:
 def about_view(request: Type[Request]) -> Type[HttpResponse]:
     """
     View function to render about page
+    return about.html
     """
     return render(request, "about.html")
-
-
-# def quoteThankyou(request: Type[Request], pk: int):
-#     """
-#     Function to send email to all users
-#     """
-#     all_users = models.User.objects.all()
-#     post = models.News.objects.get(pk=pk)
-#     for user in all_users:
-
-#     subject = f"Hello {user.username} we have a new post!"
-#     message = f"Hey come check this out! {post.name} --- The best {post.category_id.name} News of all time!"
-#     send_mail(
-#         subject,
-#         message,
-#         "sender@email.com",
-#         [f"{user.email}"],
-#         fail_silently=False,
-#     )
-
-#     return render(request, "blog/quote_thankyou.html")

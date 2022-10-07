@@ -9,14 +9,17 @@ from books import models
 
 class BooksDetail(APIView):
     """
-    Books View Get ALL and POST
+    Books Class View Get ALL and POST
     """
 
     def get(self, request: Type[Request]) -> Type[Response]:
         """
         Get Method
+        Return all serialized data from Books table in json format
+        params:
+        request -> User Get request method
         """
-        print(type(request))
+
         obj = models.Books.objects.all()
         serializer = serializers.BooksSerializer(obj, many=True)
 
@@ -25,6 +28,11 @@ class BooksDetail(APIView):
     def post(self, request: Type[Request]) -> Type[Response]:
         """
         Post Method
+        Serialize requested post from user, validates it and saves in Books Table
+        if not validates return error 400 bad request
+        params:
+        request -> User Post request method
+        id -> user input str
         """
 
         serializer = serializers.BooksSerializer(data=request.data)
@@ -36,17 +44,22 @@ class BooksDetail(APIView):
 
 class BooksInfo(APIView):
     """
-    Books View Get with ID, POST, PUT, PATCH AND DELETE
+    Books Class View Get with ID, POST, PUT, PATCH AND DELETE
     """
 
     def get(self, request: Type[Request], id: str) -> Type[Response]:
         """
-        GET Method by Specific ID
+        GET Method by Specific ID.
+        Try to get specific id based on user input from Books table.
+        if id exists return serialized response in json format.
+        else return error code 404 NOT FOUND.
+        params:
+        request -> User Get request method
+        id -> user input str
         """
 
         try:
             obj = models.Books.objects.get(id=id)
-            print(type(request))
 
         except models.Books.DoesNotExist:
             msg = {"msg": "ID not found"}
@@ -59,6 +72,12 @@ class BooksInfo(APIView):
     def put(self, request: Type[Request], id: str) -> Type[Response]:
         """
         Put Method by Specific ID
+        Try to get specific id based on user input from Books table.
+        if id exists, serialize information and validates, if valid saves the information in Books table and return code 205 RESET CONTENT
+        else return error code 400 BAD REQUEST
+        params:
+        request -> User Put request method
+        id -> user input str
         """
 
         try:
@@ -78,6 +97,12 @@ class BooksInfo(APIView):
     def patch(self, request: Type[Request], id: str) -> Type[Response]:
         """
         Patch Method by Specific ID
+        Try to get specific id based on user input from Books table.
+        if id exists, serialize information and validates, if valid saves the information in Books table and return code 205 RESET CONTENT
+        else return error code 400 BAD REQUEST
+        params:
+        request -> User Patch request method
+        id -> user input str
         """
 
         try:
@@ -97,6 +122,12 @@ class BooksInfo(APIView):
     def delete(self, request: Type[Request], id: str) -> Type[Response]:
         """
         Delete Method by Specific ID
+        Try to get specific id based on user input from Books table.
+        if id exists deletes Books object from table and return code 204 NO CONTENT
+        else return code 404 NOT FOUND
+        params:
+        request -> User Delete request method
+        id -> user input str
         """
 
         try:
