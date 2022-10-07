@@ -10,8 +10,8 @@ virtualenv -p python3 venv<br>
 pip3 install -r requirements.txt<br>
 sudo apt install redis-server # if you already have redis skip<br>
 sudo service redis-server start #<br>
-python manage.py runserver<br>
-python -m smtpd -n -c DebuggingServer localhost:1025<br>
+python3 manage.py runserver<br>
+python3 -m smtpd -n -c DebuggingServer localhost:1025<br>
 
 Rest API Routes:
 
