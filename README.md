@@ -11,7 +11,7 @@ pip3 install -r requirements.txt<br>
 sudo apt install redis-server # if you already have redis skip<br>
 sudo service redis-server start # if you already have redis skip<br>
 python manage.py runserver<br>
-python -m smtpd -n -c DebuggingServer localhost:1025<br>
+python -m smtpd -n -c DebuggingServer localhost:1025 # Temporary test for email send confirmation not necessary<br>
 
 Rest API Routes:
 
