@@ -23,6 +23,5 @@ User: admin<br>
 Pass: admin<br>
 
 To be implemented:<br>
-Cache with redis<br>
 units tests<br>
 polished code<br>
