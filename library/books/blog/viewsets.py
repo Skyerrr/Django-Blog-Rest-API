@@ -6,12 +6,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.http import Http404
 from django.http.response import HttpResponse
+from django.core.cache import cache
 from .. import models
 
 
 class UserRegisterView(CreateView):
     """
-    Class for User Registration Form
+    Generic class-based view class for User Registration
     """
 
     form_class = UserCreationForm
@@ -30,7 +31,7 @@ class IndexView(ListView):
 
 class AddPostView(CreateView):
     """
-    Class to create a new post.
+    Generic class-based view to create a new post and redirect user to the created post
     """
 
     model = models.News
@@ -38,24 +39,50 @@ class AddPostView(CreateView):
     fields = "__all__"
 
 
+# def news_detail_view(request: Type[Request], pk: int) -> Type[HttpResponse]:
+#     """
+#     View function to filter News table by primary key and return it and raise HTTP 404 if not found.
+#     """
+
+#     try:
+
+#         post = models.News.objects.get(pk=pk)
+
+#     except models.News.DoesNotExist:
+#         raise Http404("News does not exist")
+
+#     return render(request, "post.html", context={"post": post})
+
+
 def news_detail_view(request: Type[Request], pk: int) -> Type[HttpResponse]:
     """
-    Function to filter News table by primary key and return it and raise HTTP 404 if not found.
+    View function to verify if data is in cache, if not store in cache,
+    filter News table by primary key and return it and raise HTTP 404 if not found.
+    params:
+    pk -> models.News int primary key
     """
 
-    try:
+    if cache.get(pk):
+        print("DATA FROM CACHE")
+        post = cache.get(pk)
 
-        post = models.News.objects.get(pk=pk)
+    else:
+        try:
+            post = models.News.objects.get(pk=pk)
+            cache.set(pk, post)
+            print("DATA FROM DB")
 
-    except models.News.DoesNotExist:
-        raise Http404("News does not exist")
+        except models.News.DoesNotExist as exc:
+            raise Http404("News does not exist") from exc
 
-    return render(request, "post.html", context={"post": post})
+    context = {"post": post}
+
+    return render(request, "post.html", context)
 
 
 def about_view(request: Type[Request]) -> Type[HttpResponse]:
     """
-    View function for about page
+    View function to render about page
     """
     return render(request, "about.html")
 

@@ -63,10 +63,16 @@ class News(models.Model):
         )
 
     def get_absolute_url(self):
+        """
+        sendemail.sending_email -> Send email to all users with superuser status
+        Return User to the page that has been create
+        post -> Blog post from News that has just be created.
+        all_users -> all users from User table.
+        """
         post = str(self.pk)
         all_users = User.objects.all()
         post = News.objects.get(pk=post)
-        sendemail.sending_email(post, all_users, post)
+        sendemail.sending_email(all_users, post)
 
         return reverse(
             "news-detail",
