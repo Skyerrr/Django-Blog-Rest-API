@@ -47,10 +47,10 @@ class BooksInfo(APIView):
     Books Class View Get with ID, POST, PUT, PATCH AND DELETE
     """
 
-    def get(self, request: Type[Request], id: str) -> Type[Response]:
+    def get(self, request: Type[Request], *id: str) -> Type[Response]:
         """
         GET Method by Specific ID.
-        Try to get specific id based on user input from Books table.
+        Try to get specific id based on user input params.
         if id exists return serialized response in json format.
         else return error code 404 NOT FOUND.
         params:
@@ -59,6 +59,7 @@ class BooksInfo(APIView):
         """
 
         try:
+            id = request.query_params["id"]
             obj = models.Books.objects.get(id=id)
 
         except models.Books.DoesNotExist:
@@ -69,7 +70,7 @@ class BooksInfo(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request: Type[Request], id: str) -> Type[Response]:
+    def put(self, request: Type[Request], *id: str) -> Type[Response]:
         """
         Put Method by Specific ID
         Try to get specific id based on user input from Books table.
@@ -81,6 +82,7 @@ class BooksInfo(APIView):
         """
 
         try:
+            id = request.query_params["id"]
             obj = models.Books.objects.get(id=id)
 
         except models.Books.DoesNotExist:
@@ -94,7 +96,7 @@ class BooksInfo(APIView):
             return Response(serializer.data, status=status.HTTP_205_RESET_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request: Type[Request], id: str) -> Type[Response]:
+    def patch(self, request: Type[Request], *id: str) -> Type[Response]:
         """
         Patch Method by Specific ID
         Try to get specific id based on user input from Books table.
@@ -106,6 +108,7 @@ class BooksInfo(APIView):
         """
 
         try:
+            id = request.query_params["id"]
             obj = models.Books.objects.get(id=id)
 
         except models.Books.DoesNotExist:
@@ -119,7 +122,7 @@ class BooksInfo(APIView):
             return Response(serializer.data, status=status.HTTP_205_RESET_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request: Type[Request], id: str) -> Type[Response]:
+    def delete(self, request: Type[Request], *id: str) -> Type[Response]:
         """
         Delete Method by Specific ID
         Try to get specific id based on user input from Books table.
@@ -131,6 +134,7 @@ class BooksInfo(APIView):
         """
 
         try:
+            id = request.query_params["id"]
             obj = models.Books.objects.get(id=id)
 
         except models.Books.DoesNotExist:

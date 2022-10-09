@@ -7,7 +7,7 @@ Defining REST framework Routes
 
 urlpatterns = [
     path("api/books", viewsets.BooksDetail.as_view(), name="test1"),
-    path("api/books/<str:id>/", viewsets.BooksInfo.as_view(), name="test2"),
+    path("api/books/", viewsets.BooksInfo.as_view(), name="test2"),
 ]
 
 # urlpatterns = [
