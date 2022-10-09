@@ -18,6 +18,8 @@ Rest API Routes:
 127.0.0.1:8000/api/books<br>
 127.0.0.1:8000/api/books/{id}<br>
 
+[API Documentation](https://documenter.getpostman.com/view/21693015/2s83ziMiYR)
+
 admin login:<br>
 User: admin<br>
 Pass: admin<br>
