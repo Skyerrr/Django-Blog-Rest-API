@@ -13,10 +13,8 @@ sudo service redis-server start<br>
 python3 manage.py runserver<br>
 python3 -m smtpd -n -c DebuggingServer localhost:1025<br>
 
-Rest API Routes:
 
-127.0.0.1:8000/api/books<br>
-127.0.0.1:8000/api/books/{id}<br>
+[API Documentation](https://documenter.getpostman.com/view/21693015/2s83ziMiYR) <br>
 
 admin login:<br>
 User: admin<br>
