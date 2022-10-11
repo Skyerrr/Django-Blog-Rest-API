@@ -13,6 +13,10 @@ sudo service redis-server start<br>
 python3 manage.py runserver<br>
 python3 -m smtpd -n -c DebuggingServer localhost:1025<br>
 
+Docker:
+
+docker run -p 8000:8000 felipegimenes/djangoapi:latest
+
 
 [API Documentation](https://documenter.getpostman.com/view/21693015/2s83ziMiYR) <br>
 
